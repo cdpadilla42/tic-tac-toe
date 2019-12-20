@@ -1,4 +1,5 @@
-// t up your HTML and write a JavaScript function that will render the contents of the gameboard array to the webpage (for now you can just manually fill in the array with "X"s and "O"s)
+// Build the logic that checks for when the game is over! Should check for 3-in-a-row and a tie.
+// Should stop game and disallow player input after game is won.
 
 // Game flow solid! Next: Adjust for errors. Ask for input once again if space is already taken.
 
@@ -6,14 +7,14 @@
 const gameBoard = (() => {
   let _board = ["", "", "", "", "", "", "", "", ""];
   let show = () => _board;
-  let newMove = (marker, index) => {
-    if (_board[index] !== "") {
-      console.log("error! Already placed");
-    } else {
-      _board.splice(index, 1, marker);
+  let render = () => {
+    // grabs dom elements
+    for (var i = 0; i < _board.length; i++) {
+      let current = document.querySelector("td[data-index='" + i + "']");
+      current.innerText = _board[i];
     }
   }
-  return { newMove, show };
+  return { show, render };
 })();
 
 
@@ -25,21 +26,20 @@ const playerFactory = (name, marker) => {
   return { move, name, marker };
 }
 
-let playerOne;
+let playerOne = playerFactory("Chris", "X");
 let playerTwo = playerFactory("Jenn", "O");
 
 // Game-flow module
 const gameFlow = (() => {
-  
+  let currentTurn = playerTwo;
+
   let initializePlayerOne = (name, marker) => {
     playerOne = playerFactory(name, marker);
   };
 
-  let currentTurn = playerTwo;
-
-  let round = () => {
-    // player one begin
-    _turn(currentTurn);
+  let _playerMove = (index) => {
+    currentTurn.move(index);
+    gameBoard.render();
     if(isWon(gameBoard.show(), currentTurn.marker)) {
       console.log("The game is won!");
       return;
@@ -48,19 +48,40 @@ const gameFlow = (() => {
       console.log("It's a draw!");
       return;
     }
+    _swapTurn();
+  }
+
+  let _swapTurn = () => {
     if (currentTurn === playerOne) {
       currentTurn = playerTwo;
     } else {
       currentTurn = playerOne;
     }
-    round();
-  };
-
-  let _turn = (player) => {
-    let selectionOne = window.prompt("Player, what is your move?", "Index");
-    // select index, make move
-    player.move(selectionOne);
+    _renderPlayerTurn();
   }
+
+
+
+  let _renderPlayerTurn = () => {
+    document.querySelector(".message").innerText = `${currentTurn.name}'s turn!`;
+  }
+
+  let round = () => {
+    currentTurn = playerTwo;
+    _renderPlayerTurn();
+    let spaces = document.querySelectorAll("td");
+    spaces.forEach((space) => {
+      space.addEventListener('click', (e) => {
+        let selectedIndex = space.dataset.index;
+        console.log("You chose", selectedIndex);
+        if (space.innerText !== "") {
+          console.log("space already taken");
+          return;
+        }
+        _playerMove(selectedIndex);
+      })
+    });
+  };
 
   let _isBoardFull = () => {
     let board = gameBoard.show();
@@ -100,37 +121,3 @@ const gameFlow = (() => {
 
   return { tie, isWon, initializePlayerOne, round };
 })();
-
-//displayController module
-
-// 
-
-/*
-
-Gameflow logic
-
-Player one
-Enter name and chose marker...
-
-Optional Player two
-Enter name and chose marker...
-
-Round Begin
-until game is won or board is filled...
-
-  Player one begin
-  Select index
-  Process move
-  check for win
-
-  Player two begin
-  copy above
-
-Game won - return and add score
-Board filled - it's a tie!
-
-Play another round?
-If yes, Round Begin
-
-*/
-
