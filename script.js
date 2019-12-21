@@ -14,7 +14,10 @@ const gameBoard = (() => {
       current.innerText = _board[i];
     }
   }
-  return { show, render };
+  let newMove = (marker, index) => {
+    _board.splice(index, 1, marker);
+  }
+  return { show, render, newMove };
 })();
 
 
