@@ -44,11 +44,11 @@ const gameFlow = (() => {
     currentTurn.move(index);
     gameBoard.render();
     if(isWon(gameBoard.show(), currentTurn.marker)) {
-      console.log("The game is won!");
+      _win(currentTurn);
       return;
     }
     if(_isBoardFull()) {
-      console.log("It's a draw!");
+      _renderTie();
       return;
     }
     _swapTurn();
@@ -63,18 +63,30 @@ const gameFlow = (() => {
     _renderPlayerTurn();
   }
 
+  let _win = (player) => {
+    document.querySelector(".message").innerText = `${player.name} wins!!`;
+  }
 
+  let _renderTie = () => {
+    document.querySelector(".message").innerText = `It's a draw!`
+  }
 
   let _renderPlayerTurn = () => {
     document.querySelector(".message").innerText = `${currentTurn.name}'s turn!`;
   }
 
+  let _isGameOver = true;
+
   let round = () => {
+    _isGameOver = false;
     currentTurn = playerTwo;
     _renderPlayerTurn();
     let spaces = document.querySelectorAll("td");
     spaces.forEach((space) => {
       space.addEventListener('click', (e) => {
+        if(_isGameOver) {
+          return;
+        }
         let selectedIndex = space.dataset.index;
         console.log("You chose", selectedIndex);
         if (space.innerText !== "") {
