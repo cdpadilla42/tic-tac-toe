@@ -1,7 +1,4 @@
-// Build the logic that checks for when the game is over! Should check for 3-in-a-row and a tie.
-// Should stop game and disallow player input after game is won.
-
-// Game flow solid! Next: Adjust for errors. Ask for input once again if space is already taken.
+// Clean up the interface to allow players to put in their names, include a button to start/restart the game and add a display element that congratulates the winning player!
 
 // Gameboard module
 const gameBoard = (() => {
@@ -17,7 +14,10 @@ const gameBoard = (() => {
   let newMove = (marker, index) => {
     _board.splice(index, 1, marker);
   }
-  return { show, render, newMove };
+  let refreshBoard = () => {
+    _board = ["", "", "", "", "", "", "", "", ""];
+  }
+  return { show, render, newMove, refreshBoard };
 })();
 
 
@@ -25,20 +25,25 @@ const gameBoard = (() => {
 // Players object factory functions
 const playerFactory = (name, marker) => {
   let move = (index) => gameBoard.newMove(marker, index);
-  
+  let _wins = 0;
   return { move, name, marker };
 }
 
-let playerOne = playerFactory("Chris", "X");
+let playerOne;
 let playerTwo = playerFactory("Jenn", "O");
 
 // Game-flow module
 const gameFlow = (() => {
   let currentTurn = playerTwo;
 
-  let initializePlayerOne = (name, marker) => {
-    playerOne = playerFactory(name, marker);
+  let initializePlayerOne = () => {
+    let input = document.querySelector("#player-name-field").value;
+    document.querySelector("#player-name-field").value = "";
+    playerOne = playerFactory(input, "X");
+    // reassignes event listener on button to initializeplayerTwo
   };
+
+  // Next; InitializePlayerTwo function. 
 
   let _playerMove = (index) => {
     currentTurn.move(index);
@@ -80,6 +85,8 @@ const gameFlow = (() => {
   let round = () => {
     _isGameOver = false;
     currentTurn = playerTwo;
+    gameBoard.refreshBoard();
+    gameBoard.render();
     _renderPlayerTurn();
     let spaces = document.querySelectorAll("td");
     spaces.forEach((space) => {
@@ -105,6 +112,7 @@ const gameFlow = (() => {
         return false;
       }
     }
+    _isGameOver = true;
     return true;
   }
   
@@ -119,7 +127,10 @@ const gameFlow = (() => {
     [2, 4, 6]
   ];
   
-  let tie = () => "Game over! It's a draw!";
+  let tie = () => {
+    _isGameOver = true;
+    return "Game over! It's a draw!";
+  }
 
   let isWon = (gameArray, marker) => {
     for (var i = 0; i < _winStates.length; i++) {
@@ -128,6 +139,7 @@ const gameFlow = (() => {
       let third = _winStates[i][2];
 
       if (gameArray[first] === marker && gameArray[second] === marker && gameArray[third] === marker) {
+        _isGameOver = true;
         return true;
       }
     };
@@ -136,3 +148,9 @@ const gameFlow = (() => {
 
   return { tie, isWon, initializePlayerOne, round };
 })();
+
+let roundStartBttn = document.querySelector("#round-start");
+roundStartBttn.addEventListener("click", gameFlow.round);
+
+let nameSubmitBttn = document.querySelector("#name-submit");
+nameSubmitBttn.addEventListener("click", gameFlow.initializePlayerOne);
