@@ -1,4 +1,4 @@
-// Clean up the interface to allow players to put in their names, include a button to start/restart the game and add a display element that congratulates the winning player!
+// Make it pretty!
 
 // Gameboard module
 const gameBoard = (() => {
@@ -30,7 +30,7 @@ const playerFactory = (name, marker) => {
 }
 
 let playerOne;
-let playerTwo = playerFactory("Jenn", "O");
+let playerTwo;
 
 // Game-flow module
 const gameFlow = (() => {
@@ -41,9 +41,19 @@ const gameFlow = (() => {
     document.querySelector("#player-name-field").value = "";
     playerOne = playerFactory(input, "X");
     // reassignes event listener on button to initializeplayerTwo
-  };
+    nameSubmitBttn.removeEventListener("click", gameFlow.initializePlayerOne);
+    nameSubmitBttn.addEventListener("click", gameFlow.initializePlayerTwo);
+    document.querySelector("#player-name-label").innerText = "Player Two Name:"
+  }
 
-  // Next; InitializePlayerTwo function. 
+  let initializePlayerTwo = () => {
+    let input = document.querySelector("#player-name-field").value;
+    document.querySelector("#player-name-field").value = "";
+    playerTwo = playerFactory(input, "O");
+    nameSubmitBttn.removeEventListener("click", gameFlow.initializePlayerTwo);
+    document.querySelector(".form").classList.add("hide");
+    gameFlow.round();
+  }
 
   let _playerMove = (index) => {
     currentTurn.move(index);
@@ -69,11 +79,17 @@ const gameFlow = (() => {
   }
 
   let _win = (player) => {
-    document.querySelector(".message").innerText = `${player.name} wins!!`;
+    let winMessage = document.querySelector(".winner");
+    winMessage.innerText = `${player.name} wins!!`;
+    winMessage.classList.remove("hide");
+    document.querySelector(".message").innerText = "";
   }
 
   let _renderTie = () => {
-    document.querySelector(".message").innerText = `It's a draw!`
+    let winMessage = document.querySelector(".winner");
+    winMessage.innerText = `Equally matched, eh?`;
+    winMessage.classList.remove("hide");
+    document.querySelector(".message").innerText = "";
   }
 
   let _renderPlayerTurn = () => {
@@ -88,6 +104,7 @@ const gameFlow = (() => {
     gameBoard.refreshBoard();
     gameBoard.render();
     _renderPlayerTurn();
+    document.querySelector(".winner").classList.add("hide");
     let spaces = document.querySelectorAll("td");
     spaces.forEach((space) => {
       space.addEventListener('click', (e) => {
@@ -146,7 +163,7 @@ const gameFlow = (() => {
     return false;
   }
 
-  return { tie, isWon, initializePlayerOne, round };
+  return { tie, isWon, initializePlayerOne, round, initializePlayerTwo };
 })();
 
 let roundStartBttn = document.querySelector("#round-start");
@@ -154,3 +171,9 @@ roundStartBttn.addEventListener("click", gameFlow.round);
 
 let nameSubmitBttn = document.querySelector("#name-submit");
 nameSubmitBttn.addEventListener("click", gameFlow.initializePlayerOne);
+
+document.querySelector(".form").addEventListener("keydown", function(e){
+  if (e.keyCode === 13) {  
+    event.preventDefault()
+  }
+});

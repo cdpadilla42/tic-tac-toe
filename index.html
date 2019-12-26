@@ -33,11 +33,13 @@
 
       <div class="form">
         <form>
-          <label for="name" id="player-name-label">Player One Name:</label>
+          <label for="name" id="player-name-label" onsubmit="gameFlow.initializePlayerOne()">Player One Name:</label>
           <input name="name" type="text" id="player-name-field">
         </form>
         <button id="name-submit">Submit</button>
       </div>
+
+      <div class="winner hide"> You wins!!</div>
 
     <script src="script.js"></script>
     </body>

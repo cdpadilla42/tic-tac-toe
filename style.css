@@ -9,3 +9,16 @@ td {
   font-size: 70px;
   text-align: center;
 }
+
+.hide {
+  display: none;
+}
+
+.winner {
+  border: 1px solid black;
+  width: 318px;
+  height: 40px;
+  font-size: 30px;
+  text-align: center;
+  line-height: 40px;
+}
