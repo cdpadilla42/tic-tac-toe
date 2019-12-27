@@ -9,6 +9,12 @@ const gameBoard = (() => {
     for (var i = 0; i < _board.length; i++) {
       let current = document.querySelector("td[data-index='" + i + "']");
       current.innerText = _board[i];
+      if (_board[i] === "X") {
+        current.classList.add("x");
+      }
+      if (_board[i] === "O") {
+        current.classList.add("o");
+      }
     }
   }
   let newMove = (marker, index) => {
@@ -102,6 +108,7 @@ const gameFlow = (() => {
     _isGameOver = false;
     currentTurn = playerTwo;
     gameBoard.refreshBoard();
+    _clearClassList();
     gameBoard.render();
     _renderPlayerTurn();
     document.querySelector(".winner").classList.add("hide");
@@ -157,10 +164,27 @@ const gameFlow = (() => {
 
       if (gameArray[first] === marker && gameArray[second] === marker && gameArray[third] === marker) {
         _isGameOver = true;
+        _renderWinLine(first, second, third);
         return true;
       }
     };
     return false;
+  }
+
+  let _renderWinLine = (first, second, third) => {
+    let firstSquare = document.querySelector("td[data-index='" + first + "']");
+    let secondSquare = document.querySelector("td[data-index='" + second + "']");
+    let thirdSquare = document.querySelector("td[data-index='" + third + "']");
+    firstSquare.classList.add("won");
+    secondSquare.classList.add("won");
+    thirdSquare.classList.add("won");
+  }
+
+  let _clearClassList = () => {
+    for (var i = 0; i < 9; i++) {
+      let current = document.querySelector("td[data-index='" + i + "']");
+      current.classList.remove("won", "x", "o");
+    }
   }
 
   return { tie, isWon, initializePlayerOne, round, initializePlayerTwo };

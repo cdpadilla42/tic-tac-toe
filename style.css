@@ -1,5 +1,41 @@
+* {
+  text-align: center;
+}
+div, button {
+  margin: 4px auto;
+}
+
+h1 {
+  color: #51539c;
+}
+
+td {
+  background-color: #efe9e6;
+  transition: all .2s ease;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+td:hover {
+  background-color: #eecd3b
+}
+
+button {
+  border: 0 solid black;
+  border-radius: 5%;
+  transition: all .2s ease;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 15px;
+  background-color: #f2859f;
+}
+
+
+button:hover {
+  border: 2px solid #51539c
+}
+
 .boardtable{
   border: 1px solid black;
+  margin: 0 auto;
 }
 
 td {
@@ -12,13 +48,32 @@ td {
 
 .hide {
   display: none;
+  
 }
 
 .winner {
   border: 1px solid black;
+}
+.winner-space {
   width: 318px;
   height: 40px;
   font-size: 30px;
   text-align: center;
   line-height: 40px;
+}
+input {
+  text-align: left;
+}
+
+.x {
+  color: #6db8a8;
+}
+
+.o {
+  color: #f2859f;
+}
+
+.won {
+  background-color: #51539c;
+  color: #efe9e6;
 }
