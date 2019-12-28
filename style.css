@@ -1,5 +1,11 @@
+body {
+  background-color: #efe9e6;
+  color: #51539c;
+}
+
 * {
   text-align: center;
+  
 }
 div, button {
   margin: 4px auto;
@@ -7,10 +13,20 @@ div, button {
 
 h1 {
   color: #51539c;
+  font-family: 'Shadows Into Light', cursive;
+  font-weight: bold;
+  font-size: 50px;
+  margin: 0 auto;
 }
 
+
+/* .winner-space {
+  
+} */
+
+
 td {
-  background-color: #efe9e6;
+  background-color: white;
   transition: all .2s ease;
   font-family: 'Gloria Hallelujah', cursive;
 }
@@ -20,22 +36,25 @@ td:hover {
 }
 
 button {
-  border: 0 solid black;
+  border: 1px solid white;
   border-radius: 5%;
   transition: all .2s ease;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 15px;
   background-color: #f2859f;
+  margin: 5px auto;
 }
 
 
 button:hover {
-  border: 2px solid #51539c
+  border: 1px solid #51539c
 }
 
 .boardtable{
   border: 1px solid black;
   margin: 0 auto;
+  width: 320px;
+  height: 320px;
 }
 
 td {
@@ -53,7 +72,11 @@ td {
 
 .winner {
   border: 1px solid black;
+  font-family: 'Shadows Into Light', cursive;
+  background-color: #51539c;
+  color: #efe9e6;
 }
+
 .winner-space {
   width: 318px;
   height: 40px;
@@ -61,6 +84,17 @@ td {
   text-align: center;
   line-height: 40px;
 }
+
+.message {
+  height: 20px;
+  line-height: 20px;
+  font-size: 30px;
+}
+
+.round-button-space {
+  height: 30px;
+}
+
 input {
   text-align: left;
 }

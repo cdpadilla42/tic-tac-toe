@@ -2,47 +2,49 @@
   <html>
     <head>
       <title>Tic-Tac-Toe</title>
+      <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-      <h1>Tic-Tac-Toe</h1>
-      <div class="winner-space">
-        <div class="winner">Enter player names</div>
-      </div>
-      <div class="gameboard">
-        <table class="boardtable">
-          <tr>
-            <td data-index="0"></td>
-            <td data-index="1"></td>
-            <td data-index="2"></td>
-          </tr>
-          <tr>
-            <td data-index="3"></td>
-            <td data-index="4"></td>
-            <td data-index="5"></td>
-          </tr>
-          <tr>
-            <td data-index="6"></td>
-            <td data-index="7"></td>
-            <td data-index="8"></td>
-          </tr>
-        </table>
-      </div>
-      <div class="message">
-        Tic-Tac-Toe, baby!
-      </div>
       <div>
-        <button id="round-start">New Round</button>
-      </div>
+        <h1>Tic-Tac-Toe</h1>
+        <div class="winner-space">
+          <div class="winner">Enter player names</div>
+        </div>
+        <div class="gameboard">
+          <table class="boardtable">
+            <tr>
+              <td data-index="0"></td>
+              <td data-index="1"></td>
+              <td data-index="2"></td>
+            </tr>
+            <tr>
+              <td data-index="3"></td>
+              <td data-index="4"></td>
+              <td data-index="5"></td>
+            </tr>
+            <tr>
+              <td data-index="6"></td>
+              <td data-index="7"></td>
+              <td data-index="8"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="message">
+          Player entry below!
+        </div>
+        <div class="round-button-space">
+          <button id="round-start">New Round</button>
+        </div>
 
-      <div class="form">
-        <form>
-          <label for="name" id="player-name-label" onsubmit="gameFlow.initializePlayerOne()">Player One Name:</label>
-          <input name="name" type="text" id="player-name-field">
-        </form>
-        <button id="name-submit">Submit</button>
+        <div class="form">
+          <form>
+            <label for="name" id="player-name-label" onsubmit="gameFlow.initializePlayerOne()">Player One Name:</label>
+            <input name="name" type="text" id="player-name-field">
+          </form>
+          <button id="name-submit">Submit</button>
+        </div>
       </div>
-
     <script src="script.js"></script>
     </body>
   </html>
