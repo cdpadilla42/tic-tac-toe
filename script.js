@@ -1,5 +1,3 @@
-// Make it pretty!
-
 // Gameboard module
 const gameBoard = (() => {
   let _board = ["", "", "", "", "", "", "", "", ""];

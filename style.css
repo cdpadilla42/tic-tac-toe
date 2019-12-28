@@ -1,12 +1,12 @@
+* {
+  text-align: center; 
+}
+
 body {
   background-color: #efe9e6;
   color: #51539c;
 }
 
-* {
-  text-align: center;
-  
-}
 div, button {
   margin: 4px auto;
 }
@@ -18,12 +18,6 @@ h1 {
   font-size: 50px;
   margin: 0 auto;
 }
-
-
-/* .winner-space {
-  
-} */
-
 
 td {
   background-color: white;
